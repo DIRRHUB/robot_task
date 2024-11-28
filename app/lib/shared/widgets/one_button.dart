@@ -48,7 +48,7 @@ class _OneButtonState extends State<OneButton> with SingleTickerProviderStateMix
     duration: const Duration(milliseconds: 200),
     vsync: this,
   );
-  final Tween<double> scale = Tween<double>(begin: 1, end: 1.03);
+  final Tween<double> scale = Tween<double>(begin: 1, end: 1.05);
   late final Animation<double> animation = scale.animate(
     CurvedAnimation(
       parent: controller,

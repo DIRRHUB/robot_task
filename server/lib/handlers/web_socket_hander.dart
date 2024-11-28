@@ -5,7 +5,6 @@ import 'package:server/data/models/robot_state.dart';
 import 'package:server/data/models/update_speed_state.dart';
 import 'package:server/services/robot_generation_service.dart';
 
-/// Handles WebSocket connections for the robot monitoring and control system
 class WebSocketHandler {
   final RobotGenerationService _robotGenerationService = RobotGenerationService();
   RobotState _previousState = RobotState(x: 10, y: 10, speed: 10, battery: 100.0, temperature: 25);
@@ -32,7 +31,6 @@ class WebSocketHandler {
       // Listen to messages from the client and handle connection termination
       webSocket.stream.listen(
         (message) {
-          // Handle incoming messages from the client
           try {
             final data = jsonDecode(message);
             if (data is Map<String, dynamic>) {

@@ -15,7 +15,7 @@ class RobotGenerationService {
     double speedFactor = previousState.speed / maxSpeed; // Normalize speed to a factor between 0 and 1
 
     // The smaller the speed, the smaller the movement (distance between points)
-    double adjustedMovementRange = movementRange * speedFactor; // Adjust movement distance
+    double adjustedMovementRange = movementRange * speedFactor;
 
     // Calculate new position based on the previous position, adjusting by speed
     double newX = previousState.x + (_random.nextDouble() * adjustedMovementRange * 2 - adjustedMovementRange);
@@ -25,7 +25,7 @@ class RobotGenerationService {
     newX = _reflectPosition(newX, 0, 700);
     newY = _reflectPosition(newY, 0, 700);
 
-    // Generate new battery and temperature with gradual changes
+    // Generate new battery and temperature with some changes
     double newBattery = (previousState.battery - _random.nextDouble() * batteryChange).clamp(0, 100);
     double newTemperature =
         (previousState.temperature + (_random.nextDouble() * temperatureChange * 2 - temperatureChange)).clamp(10, 50);

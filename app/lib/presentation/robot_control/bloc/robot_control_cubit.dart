@@ -12,15 +12,26 @@ import 'package:robot_task/domain/usecases/listen_robot_changes_usecase.dart';
 import 'package:robot_task/domain/usecases/update_robot_speed_usecase.dart';
 import 'package:robot_task/presentation/robot_control/bloc/robot_control_state.dart';
 
+/// A [Cubit] that manages the state of the robot control page. It connects to a WebSocket
+/// to listen for changes in the robot's state, updates the robot's speed, and handles
+/// the logic to start/stop the robot and retrieve the initial speed.
 class RobotControlCubit extends Cubit<RobotControlState> {
-  RobotControlCubit(this._listenRobotChangesUsecase, this._connectToWebsocketUsecase, this._updateRobotSpeedUsecase,
-      this._getInitialSpeedUsecase)
-      : super(RobotControlState.loading());
+  /// Constructor for [RobotControlCubit].
+  ///
+  /// Initializes the [RobotControlCubit] with the provided use cases for handling robot control logic.
+  RobotControlCubit(
+    this._listenRobotChangesUsecase,
+    this._connectToWebsocketUsecase,
+    this._updateRobotSpeedUsecase,
+    this._getInitialSpeedUsecase,
+  ) : super(RobotControlState.loading());
+
   final ConnectToWebsocketUsecase _connectToWebsocketUsecase;
   final ListenRobotChangesUsecase _listenRobotChangesUsecase;
   final UpdateRobotSpeedUsecase _updateRobotSpeedUsecase;
   final GetInitialSpeedUsecase _getInitialSpeedUsecase;
 
+  /// Initializes the WebSocket connection and listens for robot state changes.
   void init() async {
     final Either<Failure, void> connectionResult = await _connectToWebsocketUsecase(ApiConstants.webSocketUrl);
     connectionResult.fold(
@@ -36,7 +47,11 @@ class RobotControlCubit extends Cubit<RobotControlState> {
             },
             (robot) {
               emit(state.copyWith(
-                  status: OneStatus.initial, robot: robot, previousRobot: state.robot, speed: robot.speed));
+                status: OneStatus.initial,
+                robot: robot,
+                previousRobot: state.robot,
+                speed: robot.speed,
+              ));
             },
           );
         });
@@ -44,8 +59,11 @@ class RobotControlCubit extends Cubit<RobotControlState> {
     );
   }
 
+  /// Updates the speed of the robot.
+  ///
+  /// Takes the new speed value and triggers an update of the robot's speed.
   void updateSpeed(double speed) async {
-    emit(state.copyWith(speed: speed));
+    emit(state.copyWith(speed: speed)); // update the UI with the new speed.
     final Either<Failure, void> result = await _updateRobotSpeedUsecase(UpdateSpeedItem(speed: speed));
     result.fold(
       (l) {
@@ -57,6 +75,9 @@ class RobotControlCubit extends Cubit<RobotControlState> {
     );
   }
 
+  /// Toggles the robot's speed between 0 and 100.
+  /// If the robot is currently stopped (speed is 0), it will start the robot with maximum speed.
+  /// If the robot is already moving, it will stop the robot (set speed to 0).
   void startOrStop() {
     if (state.robot.speed == 0) {
       updateSpeed(100);
@@ -65,6 +86,8 @@ class RobotControlCubit extends Cubit<RobotControlState> {
     }
   }
 
+  /// Fetches the initial speed of the robot from the API.
+  /// Emits the initial speed state and triggers the speed update.
   void getInitialSpeed() async {
     final Either<Failure, UpdateSpeedItem> result = await _getInitialSpeedUsecase(const NoParams());
     result.fold(
