@@ -1,8 +1,8 @@
 class RobotState {
-  final int x;
-  final int y;
+  final double x;
+  final double y;
   final double speed;
-  final int battery;
+  final double battery;
   final double temperature;
 
   RobotState({
@@ -16,9 +16,25 @@ class RobotState {
   Map<String, dynamic> toJson() {
     return {
       'position': {'x': x, 'y': y},
-      'speed': speed.toStringAsFixed(2),
+      'speed': speed,
       'battery': battery,
-      'temperature': temperature.toStringAsFixed(2),
+      'temperature': temperature,
     };
+  }
+
+  RobotState copyWith({
+    double? x,
+    double? y,
+    double? speed,
+    double? battery,
+    double? temperature,
+  }) {
+    return RobotState(
+      x: x ?? this.x,
+      y: y ?? this.y,
+      speed: speed ?? this.speed,
+      battery: battery ?? this.battery,
+      temperature: temperature ?? this.temperature,
+    );
   }
 }
