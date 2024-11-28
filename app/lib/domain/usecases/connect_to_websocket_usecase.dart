@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:robot_task/core/base/failure.dart';
 import 'package:robot_task/core/base/usecase.dart';
-import 'package:robot_task/domain/repositories/remote_repository.dart';
+import 'package:robot_task/data/repositories/remote_repository.dart';
 
 class ConnectToWebsocketUsecase extends UseCaseFutureEither<void, String> {
   ConnectToWebsocketUsecase({required this.remoteRepository});

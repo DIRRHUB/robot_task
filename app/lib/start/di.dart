@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:robot_task/core/constants/api_constants.dart';
 import 'package:robot_task/core/services/web_socket_service.dart';
 import 'package:robot_task/data/datasources/remote_datasource.dart';
-import 'package:robot_task/domain/repositories/remote_repository.dart';
+import 'package:robot_task/data/repositories/remote_repository.dart';
 import 'package:robot_task/domain/usecases/connect_to_websocket_usecase.dart';
 import 'package:robot_task/domain/usecases/get_initial_speed_usecase.dart';
 import 'package:robot_task/domain/usecases/listen_robot_changes_usecase.dart';
