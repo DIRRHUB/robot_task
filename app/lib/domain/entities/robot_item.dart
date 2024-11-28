@@ -19,7 +19,7 @@ class RobotItem with _$RobotItem {
     return RobotItem(
       position: PositionItem.fromModel(model.position),
       speed: double.parse(model.speed.toStringAsFixed(2)),
-      battery: double.parse(model.speed.toStringAsFixed(2)),
+      battery: double.parse(model.battery.toStringAsFixed(2)),
       temperature: double.parse(model.temperature.toStringAsFixed(2)),
     );
   }
