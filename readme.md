@@ -1,7 +1,7 @@
 Set Up the App
 
 1: Clone the repository
-git clone https://github.com/DIRRHUB/robot_task.git
+```git clone https://github.com/DIRRHUB/robot_task.git```
 
 2: Run the server
 cd server/bin
